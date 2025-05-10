@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  estimation_app:
+    build:
+      context: .
+    container_name: estimation_app
+    depends_on:
+      - estimation_db
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=postgres
+    networks:
+      - est_net
+    ports:
+      - "8080:8080"
+  estimation_db:
+    image: 'postgres:15-alpine'
+    container_name: estimation_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - est_net
+    ports:
+      - "5433:5433"
+
+networks:
+  invest_net:
+
